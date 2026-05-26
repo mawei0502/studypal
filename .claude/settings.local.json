@@ -48,7 +48,9 @@
       "Bash(curl -s -X POST http://localhost:8000/api/v1/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"demo@studypal.com\",\"password\":\"12345678\"}')",
       "Skill(opsx:ff)",
       "Skill(opsx:apply)",
-      "Skill(openspec-sync-specs)"
+      "Skill(openspec-sync-specs)",
+      "Bash(gh auth *)",
+      "Bash(brew list *)"
     ]
   }
 }
