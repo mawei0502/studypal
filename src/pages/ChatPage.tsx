@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback, type KeyboardEvent } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { apiFetch, getAccessToken } from '../services/apiClient'
+import { apiFetch, getAccessToken, API_BASE } from '../services/apiClient'
 import { useAuth, useMockAuth } from '../contexts/AuthContext'
 import { mockStats } from '../data/mockStats'
 
@@ -148,7 +148,7 @@ export default function ChatPage() {
 
     try {
       const token = getAccessToken()
-      const res = await fetch('/api/v1/chat/stream', {
+      const res = await fetch(`${API_BASE}/api/v1/chat/stream`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,8 @@
 const REFRESH_KEY = 'studypal_refresh_token'
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+export { API_BASE }
+
 export function getRefreshToken(): string | null {
   return localStorage.getItem(REFRESH_KEY)
 }
@@ -31,7 +34,7 @@ async function refreshAccessToken(): Promise<string | null> {
   const refreshToken = getRefreshToken()
   if (!refreshToken) return null
 
-  const res = await fetch('/api/v1/auth/refresh', {
+  const res = await fetch(`${API_BASE}/api/v1/auth/refresh`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${refreshToken}` },
   })
@@ -52,7 +55,7 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
   const headers = new Headers(init.headers)
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
-  const res = await fetch(path, { ...init, headers })
+  const res = await fetch(`${API_BASE}${path}`, { ...init, headers })
 
   if (res.status === 401) {
     const newToken = await refreshAccessToken()
@@ -62,7 +65,7 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
     }
     const retryHeaders = new Headers(init.headers)
     retryHeaders.set('Authorization', `Bearer ${newToken}`)
-    return fetch(path, { ...init, headers: retryHeaders })
+    return fetch(`${API_BASE}${path}`, { ...init, headers: retryHeaders })
   }
 
   return res

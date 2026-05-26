@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { API_BASE } from '../services/apiClient'
 
 export default function RegisterPage() {
   const { login } = useAuth()
@@ -23,7 +24,7 @@ export default function RegisterPage() {
 
     setLoading(true)
     try {
-      const res = await fetch('/api/v1/auth/register', {
+      const res = await fetch(`${API_BASE}/api/v1/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -34,7 +35,7 @@ export default function RegisterPage() {
         return
       }
       const tokens = await res.json()
-      const profileRes = await fetch('/api/v1/users/me', {
+      const profileRes = await fetch(`${API_BASE}/api/v1/users/me`, {
         headers: { Authorization: `Bearer ${tokens.access_token}` },
       })
       const user = await profileRes.json()
