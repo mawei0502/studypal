@@ -50,7 +50,9 @@
       "Skill(opsx:apply)",
       "Skill(openspec-sync-specs)",
       "Bash(gh auth *)",
-      "Bash(brew list *)"
+      "Bash(brew list *)",
+      "Bash(npm list *)",
+      "Bash(railway --version)"
     ]
   }
 }
