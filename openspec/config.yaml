@@ -1,22 +1,43 @@
 schema: spec-driven
 
 context: |
-  项目：个人品牌站（Personal Website）
-  技术栈：React 19 + Vite 7 + TypeScript + Tailwind CSS v4
-  部署：GitHub Pages，base path 为 /my-website/
-  设计风格：科技感，动态粒子风，支持亮/暗切换
+  项目：从个人品牌站演进为全栈 AI 学习平台（Personal Website → AI Learning Platform）
+  当前状态：纯前端品牌站（单页静态展示），正在向全栈应用扩展
+  技术栈：
+    - 前端：React 19 + Vite 7 + TypeScript（已落地）
+    - 后端：FastAPI + SQLite（即将引入）
+  样式方案：Tailwind CSS v4（utility-first，使用 dark: 前缀实现亮/暗模式，禁止内联 style）
+  路由：
+    - 当前：HTML 锚点导航（#hero / #about / #projects），无路由库
+    - 演进：引入 react-router 支持多页面（公开页 / 登录态 / 管理后台），保留锚点用于单页内跳转
+  部署：前后端统一通过 GitHub Pages 对外暴露（前端静态资源 + 后端 API 通过统一域名访问）
+  设计风格：科技感、动态粒子风、支持亮/暗切换
   性能：首屏加载 < 2 秒，所有图片使用 lazy loading
+  约束：
+    - 复用现有组件（Navbar / HeroSection / ProjectCard / ParticleCanvas / useTheme），不推倒重来
+    - 新增后端不影响前端构建流程（vite build 仍产出纯静态 dist/）
+    - 数据层从 src/data/*.ts 硬编码常量平滑迁移到 API 调用，保持组件接口稳定
 
 rules:
   proposal:
-    - 必须明确写出 out-of-scope（不做什么）
+    - 必须显式列出不做的事项（out-of-scope / NOT doing 清单）
     - 必须评估对现有功能的影响
+    - 高风险变更必须包含回滚方案
   specs:
-    - 使用 Given/When/Then 格式描述交互行为
-    - 每个 spec 必须包含至少一个边界/异常场景
+    - 所有 API 行为使用 Given/When/Then 格式
+    - 每个 spec 必须包含至少一个错误场景
+    - 每个 requirement 的 scenario 不超过 5 个
+    - 单个 spec 文件不超过 2000 词
+    - 省略理由说明，除非直接影响实现
+    - 使用 RFC 2119 关键词（SHALL / SHOULD / MAY）
   tasks:
-    - 每个任务粒度不超过 30 分钟
-    - 按 Phase 分组，每个 Phase 结束后等待我确认
+    - 单个 task 不超过 2 小时工作量
+    - 相关 task 按 phase 分组
+    - 每个 phase 结束后包含验证步骤
+    - 新建服务前必须先检查是否有可复用的已有服务
+  design:
+    - 包含组件层级图
+    - 文档化所有 API 端点规范
 
 languages: |
   Generate all artifacts in Simplified Chinese.
