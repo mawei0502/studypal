@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mawei0502.github.io/MyWebsite/sitemap.xml
